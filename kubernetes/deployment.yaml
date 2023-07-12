@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+  labels:
+    app: my-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+        - name: app-container
+          image: leonel1608/projecto:latest
+          ports:
+            - containerPort: 27017
+          env:
+            - name: MONGO_CONNECTION_STRING
+              value: "mongodb+srv://josealvia:jose2000@cluster1.4jitq.mongodb.net/Examen1?retryWrites=true&w=majority"
