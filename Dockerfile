@@ -14,4 +14,4 @@ COPY --from=Build /app/ ./
 COPY --from=Deps-Produ /app/node_modules ./node_modules
 ENV NODE_ENV='production'
 EXPOSE 3000
-CMD ["npm", "run", "start" ]
+CMD ["npm", "run", "dev" ]
