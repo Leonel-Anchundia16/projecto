@@ -1,18 +1,56 @@
 name: Docker Image CI
-
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-
 jobs:
-
   build:
-
+# - explicación: Runner en ubuntu
     runs-on: ubuntu-latest
-
+# - explicación: Los siguientes pasos son ejecutados al realizar un git push
     steps:
-    - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+# - explicación: Esta es una acción que comprueba tu repositorio en el ejecutor, lo cual
+#te permite ejecutar scripts u otras acciones contra tu código (tales como herramientas de
+#compilación y prueba). Debes utilizar la acción de verificación en cualquier momento en el
+#que tu flujo de trabajo se ejecute contra el código del repositorio.
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+# - explicación: Con este paquete podemos generar una version nueva de manera automática,
+#tomando en cuenta los patrones y el formato. Major y feat son palabras que en este caso
+#serían reservadas para su commit y debe utilizarla dependiendo del caso.
+    - name: Git Semantic Version
+      uses: PaulHatch/semantic-version@v4.0.3
+      with:
+        major_pattern: "major:"
+        minor_pattern: "feat:"
+        format: "${major}.${minor}.${patch}-prerelease${increment}"
+      id: version
+
+# - explicación: Iniciar sesión en Docker desde GIT
+    - name: Docker Login
+      env:
+        DOCKER_USER: ${{ secrets.DOCKER_USER }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      run: |
+        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+
+# - explicación: Construir las imágenes aplicando el parámetro NEW_VERSION anteriormente
+#definido (environment variable)
+    - name: Build Docker Image
+      env:
+        NEW_VERSION: ${{ steps.version.outputs.version }}
+      run: |
+        docker build -t leonel1608/projecto:$NEW_VERSION .
+        docker build -t leonel1608/projecto:latest .
+
+ # - explicación: Subir imagen al docker hub aplicando el parámetro NEW_VERSION
+    - name: Push Docker Image
+      env:
+        NEW_VERSION: ${{ steps.version.outputs.version }}
+      run: |
+        docker push leonel1608/projecto:$NEW_VERSION
+        docker push leonel1608/projecto:latest
+
