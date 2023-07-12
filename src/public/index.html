@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pasatiempos</title>
+    <!-- Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
+      crossorigin="anonymous"
+    />
+
+    <!-- animate.css -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link rel="stylesheet" href="/main.css" />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">
+        <a class="navbar-brand" href="/"
+          ><img
+            src="https://cdn-icons-png.flaticon.com/512/1188/1188496.png"
+            alt=""
+            width="30"
+            height="30"
+        /></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="userDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Usuario
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                <li>
+                  <a class="dropdown-item" href="#" onclick="cerrarSesion()"
+                    >Cerrar sesión</a
+                  >
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container h-100">
+      <div class="row h-100">
+        <div class="col-md-4 my-auto">
+          <form id="noteForm" class="card card-body rounded-0">
+            <h1 class="h3 mb-5">Agregar Pasatiempos</h1>
+            <input
+              id="title"
+              type="text"
+              name="message"
+              placeholder="Nombre del pasatiempo"
+              class="form-control rounded-0 mb-3"
+              autofocus
+            />
+
+            <textarea
+              name="description"
+              id="description"
+              rows="2"
+              placeholder="Describe el pasatiempo aqui."
+              class="form-control rounded-0 mb-3"
+            ></textarea>
+            <button class="btn btn-dark rounded-0">Enviar</button>
+          </form>
+        </div>
+        <div class="col-md-8 py-3" id="notes"></div>
+      </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="main.js" type="module"></script>
+    <script src="./js/extends.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

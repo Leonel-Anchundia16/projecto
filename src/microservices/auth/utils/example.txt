@@ -1,0 +1,38 @@
+---------------------------------------------------registro de usuario---------------------------------------------------
+mutation {
+signup(userInput: {
+name: "John"
+email: "john@example.com"
+password: "password123"
+}) {
+_id
+name
+email
+}
+}
+
+---------------------------------------------------login de usuario---------------------------------------------------
+
+
+mutation {
+login(name: "John", email: "john@example.com", password: "password123")
+}
+
+---------------------------------------------------obtener usuario por email---------------------------------------------------
+
+query {
+user(email: "john@example.com") {
+_id
+name
+email
+}
+}
+---------------------------------------------------obtener lista de usuarios---------------------------------------------------
+
+query {
+  users {
+    _id
+    name
+    email
+  }
+}
